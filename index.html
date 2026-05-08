@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Álbum Figurinhas Copa 2026</title>
+ 
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+ 
+  <!-- Estilos da aplicação -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ 
+  <!-- =====================================================
+       TELA DE AUTENTICAÇÃO
+  ===================================================== -->
+  <div id="screen-auth">
+    <div class="auth-card">
+      <div class="auth-logo">⚽ <span>Álbum</span> Copa 2026</div>
+      <div class="auth-sub">Controle oficial de figurinhas</div>
+ 
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="auth-email" placeholder="seu@email.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input
+          type="password"
+          id="auth-pass"
+          placeholder="Mínimo 6 caracteres"
+          autocomplete="current-password"
+          onkeydown="if(event.key==='Enter') fbLogin()"
+        />
+      </div>
+ 
+      <button class="btn-primary" id="btn-login" onclick="fbLogin()">Entrar</button>
+      <button class="btn-secondary" onclick="fbRegister()">Criar conta gratuita</button>
+ 
+      <div class="auth-divider">ou</div>
+ 
+      <button class="btn-google" onclick="fbGoogleLogin()">
+        <!-- Ícone Google SVG inline (não depende de CDN externo) -->
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+          <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04c-.72.48-1.63.77-2.7.77a4.82 4.82 0 01-4.53-3.31H1.77v2.07A8 8 0 008.98 17z"/>
+          <path fill="#FBBC05" d="M4.45 10.48A4.86 4.86 0 014.2 9c0-.52.09-1.02.25-1.48V5.45H1.77A8 8 0 001 9c0 1.29.31 2.51.86 3.59l2.59-2.11z"/>
+          <path fill="#EA4335" d="M8.98 4.19c1.22 0 2.31.42 3.17 1.25l2.37-2.37A7.93 7.93 0 008.98 1a8 8 0 00-7.21 4.45l2.68 2.07a4.82 4.82 0 014.53-3.33z"/>
+        </svg>
+        Entrar com Google
+      </button>
+    </div>
+  </div>
+ 
+  <!-- =====================================================
+       TELA PRINCIPAL DO ÁLBUM
+  ===================================================== -->
+  <div id="screen-app">
+ 
+    <!-- Cabeçalho com logo e botão de logout -->
+    <header class="header">
+      <div class="logo">⚽ <span>Copa</span> 2026</div>
+      <div class="header-right">
+        <span class="user-email" id="user-email-display"></span>
+        <button class="btn-logout" onclick="fbLogout()">Sair</button>
+      </div>
+    </header>
+ 
+    <!-- Barra de estatísticas: coladas / faltando / repetidas -->
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-num" id="s-total">0</div>
+        <div class="stat-lbl">Coladas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="s-miss">0</div>
+        <div class="stat-lbl">Faltando</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="s-rep">0</div>
+        <div class="stat-lbl">Repetidas</div>
+      </div>
+    </div>
+ 
+    <!-- Barra de progresso geral do álbum -->
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="prog-label">0% completo</div>
+    </div>
+ 
+    <!-- Abas de navegação por grupo -->
+    <div class="tabs" id="tabs">
+      <div class="tab active" data-tab="all">🌍 Todos</div>
+      <div class="tab" data-tab="A">Grupo A</div>
+      <div class="tab" data-tab="B">Grupo B</div>
+      <div class="tab" data-tab="C">Grupo C</div>
+      <div class="tab" data-tab="D">Grupo D</div>
+      <div class="tab" data-tab="E">Grupo E</div>
+      <div class="tab" data-tab="F">Grupo F</div>
+      <div class="tab" data-tab="G">Grupo G</div>
+      <div class="tab" data-tab="H">Grupo H</div>
+      <div class="tab" data-tab="I">Grupo I</div>
+      <div class="tab" data-tab="J">Grupo J</div>
+      <div class="tab" data-tab="K">Grupo K</div>
+      <div class="tab" data-tab="L">Grupo L</div>
+      <div class="tab" data-tab="FWC">🏆 FWC / Coca-Cola</div>
+    </div>
+ 
+    <!-- Chips de filtro rápido -->
+    <div class="filter-bar">
+      <div class="chip active" data-filter="all">Todas</div>
+      <div class="chip" data-filter="missing">⬜ Faltando</div>
+      <div class="chip" data-filter="have">✅ Coladas</div>
+      <div class="chip" data-filter="repeat">🔁 Repetidas</div>
+      <div class="chip" data-filter="complete">🏅 Completas</div>
+    </div>
+ 
+    <!-- Área de conteúdo: renderizada via JS -->
+    <main class="content" id="content"></main>
+ 
+    <!-- Botão flutuante para abrir o modal de repetidas -->
+    <button class="fab" onclick="openRepeats()" title="Ver figurinhas repetidas">📋</button>
+  </div>
+ 
+  <!-- =====================================================
+       MODAL: Lista de figurinhas repetidas
+  ===================================================== -->
+  <div class="modal-bg" id="rep-modal">
+    <div class="modal">
+      <div class="modal-top">
+        <div class="modal-title">🔁 Figurinhas Repetidas</div>
+        <button class="modal-close" onclick="closeRepeats()">✕</button>
+      </div>
+      <div id="rep-list"></div>
+    </div>
+  </div>
+ 
+  <!-- Notificações toast -->
+  <div id="toast"></div>
+ 
+  <!-- =====================================================
+       SCRIPTS — type="module" obrigatório para Firebase ESM
+  ===================================================== -->
+  <script type="module" src="script.js"></script>
+ 
+</body>
+</html>
