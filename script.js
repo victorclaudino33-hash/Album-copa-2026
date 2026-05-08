@@ -211,7 +211,7 @@ const ALBUM = {
       { code: 'POR', name: 'Portugal',       flag: 'POR' },
       { code: 'COD', name: 'Congo',          flag: 'COD' },
       { code: 'UZB', name: 'Uzbequistão',   flag: 'UZB' },
-      { code: 'COL', name: 'Colômbia',      flag: 'COCOLL' },
+      { code: 'COL', name: 'Colômbia',      flag: 'COL' },
     ]},
     { id: 'L', teams: [
       { code: 'ENG', name: 'Inglaterra',     flag: 'ENG󠁧󠁢󠁥' },
